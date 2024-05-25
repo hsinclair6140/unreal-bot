@@ -1,0 +1,10 @@
+{
+    "version": 1.0,
+    "Package0" : {
+        "Repository" : "nuget-hosted",
+        "Format" : "nuget",
+        "ComponentName" : "AssetFactory.SFX.Ambient.Dark.Hostile",
+        "ComponentVersion" : "1.0.0",
+        "UnpackPath" : "./AssetFactory/Content/AssetFactory/SFX/Ambient/Dark"
+    }
+}
