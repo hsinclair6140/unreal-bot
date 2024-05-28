@@ -1,4 +1,4 @@
-from nexus import Nexus
+from app.nexus import Nexus
 import configparser
 
 class ArtifactRepo:
@@ -12,8 +12,8 @@ class ArtifactRepo:
     _repo = None
 
     def __init__(self, repo_config_path:str) -> None:
-        config.read(repo_config_path)
         config = configparser.ConfigParser()
+        config.read(repo_config_path)
         url = config['repo']['url']
         un = config['repo']['un']
         pw = config['repo']['pw']

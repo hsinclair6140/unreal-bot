@@ -1,6 +1,8 @@
 from nexuscli.nexus_config import NexusConfig
 from nexuscli.nexus_client import NexusClient
 from nexuscli.nexus_http import NexusHttp
+from nexuscli.exception import NexusClientInvalidCredentials
+from nexuscli.exception import NexusClientConnectionError
 from nexuscli.api.repository.base_models.repository import Repository
 
 class Nexus:
@@ -22,6 +24,21 @@ class Nexus:
         nexus_config = NexusConfig(url=url, username=un, password=pw)
         self._nexus_client = NexusClient(nexus_config)
         self._nexus_http = NexusHttp(nexus_config)
+        try:
+            self._nexus_http.get("/service/rest/v1/read-only")
+        except NexusClientInvalidCredentials as e:
+            msg = f"Invalid credentials: {e}"
+            print(msg)
+            raise NexusClientInvalidCredentials(msg)
+        except NexusClientConnectionError as e:
+            msg = f"Error connecting to '{url}': {e}"
+            print(msg)
+            raise NexusClientConnectionError(msg)
+        except Exception as e:
+            msg = f"Error occurred while connecting the Nexus repo at '{url}': {e}"
+            print(msg)
+            raise Exception(msg)
+        
 
     def download(self, repo:str, remote_path:str, download_path:str):
         """
